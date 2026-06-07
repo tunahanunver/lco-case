@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { BrainCircuit, Coins, Scale, Trophy, Users, Zap } from "lucide-react";
 
@@ -142,6 +142,12 @@ function App() {
         ? "The Championship Final"
         : "Phase 2: Boardroom Pressure";
   const finalProfileTitle = getOwnerTitle(stats);
+  const attitudeScore = Math.min(
+    98,
+    Math.max(75, Math.round(((stats.finances + stats.fans + stats.morale) / 3) * 1.3)),
+  );
+  const [animatedAttitudeScore, setAnimatedAttitudeScore] = useState(0);
+  const [barFillScore, setBarFillScore] = useState(0);
   const metricItems = useMemo(
     () => [
       { key: "finances", label: "Finances", icon: Coins, value: stats.finances },
@@ -150,6 +156,41 @@ function App() {
     ],
     [stats],
   );
+
+  useEffect(() => {
+    if (!isFinalRevealed) {
+      setAnimatedAttitudeScore(0);
+      setBarFillScore(0);
+      return;
+    }
+
+    setAnimatedAttitudeScore(0);
+    setBarFillScore(0);
+
+    const fillTimeout = window.setTimeout(() => {
+      setBarFillScore(attitudeScore);
+    }, 40);
+
+    const durationMs = 2000;
+    const startTime = performance.now();
+    let rafId = 0;
+
+    const tick = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      setAnimatedAttitudeScore(Math.round(attitudeScore * progress));
+      if (progress < 1) {
+        rafId = window.requestAnimationFrame(tick);
+      }
+    };
+
+    rafId = window.requestAnimationFrame(tick);
+
+    return () => {
+      window.clearTimeout(fillTimeout);
+      window.cancelAnimationFrame(rafId);
+    };
+  }, [isFinalRevealed, attitudeScore]);
 
   const handleSelectOption = (option, optionKey) => {
     if (isLocked || isCalculating || isFinalRevealed) return;
@@ -403,7 +444,7 @@ function App() {
             </div>
 
             {(isCalculating || isFinalRevealed) && (
-              <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/70 p-4 backdrop-blur-xl md:p-6">
+              <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/25 p-4 backdrop-blur-xl md:p-6">
                 {isCalculating ? (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -419,37 +460,70 @@ function App() {
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mx-auto w-full max-w-lg rounded-2xl border border-zinc-700 bg-black/80 p-5 text-center shadow-[0_0_30px_rgba(16,185,129,0.2)] md:p-6"
+                    className="absolute inset-0 overflow-hidden rounded-xl opacity-0 animate-in fade-in duration-1000"
                   >
-                    <h3 className="text-2xl font-black uppercase tracking-wide text-white">
-                      PROFILE EVALUATION COMPLETE!
-                    </h3>
-                    <p className="mt-2 text-lg font-black uppercase tracking-wide text-[#10b981]">
-                      {finalProfileTitle}
-                    </p>
-                    <div className="my-4 flex flex-wrap justify-center gap-3">
-                      <span className="flex items-center gap-1 rounded-full border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300">
-                        💰 Finance: <span className="font-bold text-emerald-400">Stable</span>
-                      </span>
-                      <span className="flex items-center gap-1 rounded-full border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300">
-                        📣 Fans: <span className="font-bold text-emerald-400">Loyal</span>
-                      </span>
-                      <span className="flex items-center gap-1 rounded-full border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300">
-                        🧠 Morale: <span className="font-bold text-emerald-400">High</span>
-                      </span>
+                    <img
+                      src="/stadium-tunnel.png"
+                      alt="Matchday tunnel"
+                      className="absolute inset-0 h-full w-full object-cover object-center"
+                      style={{ filter: "brightness(1.45) contrast(1.1) saturate(1.2)" }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/20 to-transparent" />
+
+                    <div className="relative z-10 flex h-full items-center justify-center p-5 md:p-6">
+                      <div className="w-full max-w-md rounded-3xl border border-zinc-700 bg-black/60 p-4 text-center shadow-2xl backdrop-blur-sm">
+                        <h3 className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
+                          MATCHDAY: THE GRAND FINAL
+                        </h3>
+                        <p className="mt-3 text-lg font-extrabold uppercase tracking-wide text-[#10b981] md:text-xl">
+                          {finalProfileTitle}
+                        </p>
+
+                        <hr className="my-6 border-zinc-700" />
+
+                        <div className="rounded-xl border border-zinc-700 bg-black/90 p-5 shadow-[0_0_30px_rgba(0,0,0,0.75)]">
+                          <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider">
+                            <span className="text-emerald-400">Owner DNA</span>
+                            <span className="text-emerald-400 font-bold [text-shadow:0_0_8px_#10b981]">
+                              {animatedAttitudeScore}%
+                            </span>
+                          </div>
+                          <div className="h-3 overflow-hidden rounded-full bg-zinc-800 ring-1 ring-emerald-500/30">
+                            <div
+                              className="h-full rounded-full !bg-[#10b981] shadow-[0_0_18px_#10b981] transition-all duration-[2000ms] ease-out"
+                              style={{ width: `${barFillScore}%` }}
+                            />
+                          </div>
+                          <div className="mt-4 flex flex-wrap justify-center gap-2.5">
+                            <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                              💰 Finance:{" "}
+                              <span className="font-bold text-emerald-400">{clampForBar(stats.finances)}</span>
+                            </span>
+                            <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                              📣 Fans:{" "}
+                              <span className="font-bold text-emerald-400">{clampForBar(stats.fans)}</span>
+                            </span>
+                            <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                              🧠 Morale:{" "}
+                              <span className="font-bold text-emerald-400">{clampForBar(stats.morale)}</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        <p className="mt-6 text-xs leading-relaxed tracking-wide text-zinc-300 md:text-sm">
+                          Your tactical DNA is calculated. The squad is waiting in the tunnel. Take control
+                          of a real club against live data and rule the game.
+                        </p>
+                        <a
+                          href="https://apps.apple.com/tr/app/efsane-ba%C5%9Fkan/id6743401408"
+                          target="_blank"
+                          data-testid="download-beta-btn"
+                          className="mt-4 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
+                        >
+                          TAKE THE FIELD: DOWNLOAD NOW
+                        </a>
+                      </div>
                     </div>
-                    <p className="mx-auto mb-6 max-w-sm text-center text-xs tracking-wide text-zinc-400 md:text-sm">
-                      Your strategy works. Now guide a real club against live data and fight for{" "}
-                      <span className="font-semibold text-emerald-400">real cash rewards</span>.
-                    </p>
-                    <a
-                      href="https://apps.apple.com/tr/app/efsane-ba%C5%9Fkan/id6743401408"
-                      target="_blank"
-                      data-testid="download-beta-btn"
-                      className="mt-2 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
-                    >
-                      JOIN THE BETA: DOWNLOAD NOW
-                    </a>
                   </motion.div>
                 )}
               </div>
