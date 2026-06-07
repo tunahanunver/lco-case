@@ -444,7 +444,7 @@ function App() {
             </div>
 
             {(isCalculating || isFinalRevealed) && (
-              <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/25 p-4 backdrop-blur-xl md:p-6">
+              <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/75 p-4 backdrop-blur-xl md:p-6">
                 {isCalculating ? (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -520,7 +520,7 @@ function App() {
                           data-testid="download-beta-btn"
                           className="mt-4 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
                         >
-                          TAKE THE FIELD: DOWNLOAD NOW
+                          TAKE CONTROL: DOWNLOAD NOW
                         </a>
                       </div>
                     </div>
