@@ -233,7 +233,7 @@ function App() {
   };
 
   return (
-    <div className="relative h-[100dvh] overflow-hidden bg-black text-zinc-100">
+    <div className="relative min-h-screen overflow-hidden bg-black text-zinc-100">
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden overflow-visible md:absolute md:right-0 md:top-0 md:block md:h-full md:w-1/2">
         <img
           src="/case.png"
@@ -264,8 +264,8 @@ function App() {
         className="pointer-events-none absolute bottom-2 right-2 z-30 w-[120px] opacity-75 sm:bottom-3 sm:right-3 sm:w-[150px] md:bottom-5 md:right-5 md:w-[180px]"
       />
 
-      <main className="relative z-10 h-full px-4 py-4 md:w-1/2 md:px-12 md:py-6">
-        <div className="flex h-full max-w-3xl flex-col">
+      <main className="relative z-10 h-full w-full px-4 py-4 pb-20 md:w-1/2 md:px-12 md:py-6">
+        <div className="mx-auto flex h-full w-full max-w-md flex-col md:max-w-3xl">
           <h1>
             <span className="block text-white font-black text-4xl md:text-5xl tracking-tight uppercase mb-1">
               LEGENDARY CLUB OWNER (LCO)
@@ -309,7 +309,7 @@ function App() {
 
           <section
             data-testid="quiz-container"
-            className="relative w-full h-[500px] overflow-hidden rounded-xl border border-emerald-500/30 bg-zinc-900/80 px-4 pt-4 pb-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] md:h-[500px] md:pb-8"
+            className="relative w-full h-auto overflow-hidden rounded-xl border border-emerald-500/30 bg-zinc-900/80 px-4 pt-4 pb-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] md:h-[500px] md:pb-8"
           >
             <h2 className="text-2xl font-black uppercase tracking-tight text-white">
               WHAT KIND OF OWNER ARE YOU?
