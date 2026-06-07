@@ -438,95 +438,95 @@ function App() {
               </AnimatePresence>
             </div>
 
-            {(isCalculating || isFinalRevealed) && (
+            {isCalculating && (
               <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/75 p-4 backdrop-blur-xl md:p-6">
-                {isCalculating ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center"
-                  >
-                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-zinc-300">
-                      ANALYZING YOUR OWNER PROFILE...
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center"
+                >
+                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-zinc-300">
+                    ANALYZING YOUR OWNER PROFILE...
+                  </p>
+                  <div className="mx-auto mt-4 h-10 w-10 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
+                </motion.div>
+              </div>
+            )}
+
+            {isFinalRevealed && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="relative mt-4 overflow-hidden rounded-xl opacity-0 animate-in fade-in duration-1000"
+              >
+                <img
+                  src="/stadium-tunnel.png"
+                  alt="Matchday tunnel"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                  style={{ filter: "brightness(1.45) contrast(1.1) saturate(1.2)" }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/20 to-transparent" />
+
+                <div className="relative z-10 flex min-h-screen h-auto flex-col items-center justify-start p-5 pb-10 md:p-6 md:pb-10">
+                  <div className="h-fit w-full max-w-md rounded-3xl border border-zinc-700 bg-black/60 p-4 text-center shadow-2xl backdrop-blur-sm">
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
+                      MATCHDAY: THE GRAND FINAL
+                    </h3>
+                    <p className="mt-3 text-lg font-extrabold uppercase tracking-wide text-[#10b981] md:text-xl">
+                      {finalProfileTitle}
                     </p>
-                    <div className="mx-auto mt-4 h-10 w-10 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute inset-0 overflow-hidden rounded-xl opacity-0 animate-in fade-in duration-1000"
-                  >
-                    <img
-                      src="/stadium-tunnel.png"
-                      alt="Matchday tunnel"
-                      className="absolute inset-0 h-full w-full object-cover object-center"
-                      style={{ filter: "brightness(1.45) contrast(1.1) saturate(1.2)" }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/20 to-transparent" />
 
-                    <div className="relative z-10 flex h-full items-center justify-center p-5 md:p-6">
-                      <div className="w-full max-w-md rounded-3xl border border-zinc-700 bg-black/60 p-4 text-center shadow-2xl backdrop-blur-sm">
-                        <h3 className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
-                          MATCHDAY: THE GRAND FINAL
-                        </h3>
-                        <p className="mt-3 text-lg font-extrabold uppercase tracking-wide text-[#10b981] md:text-xl">
-                          {finalProfileTitle}
-                        </p>
+                    <hr className="my-6 border-zinc-700" />
 
-                        <hr className="my-6 border-zinc-700" />
-
-                        <div className="rounded-xl border border-zinc-700 bg-black/90 p-5 shadow-[0_0_30px_rgba(0,0,0,0.75)]">
-                          <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider">
-                            <span className="text-emerald-400">Owner DNA</span>
-                            <span className="text-emerald-400 font-bold [text-shadow:0_0_8px_#10b981]">
-                              {animatedAttitudeScore}%
-                            </span>
-                          </div>
-                          <div className="h-3 overflow-hidden rounded-full bg-zinc-800 ring-1 ring-emerald-500/30">
-                            <div
-                              className="h-full rounded-full !bg-[#10b981] shadow-[0_0_18px_#10b981] transition-all duration-[2000ms] ease-out"
-                              style={{ width: `${barFillScore}%` }}
-                            />
-                          </div>
-                          <div className="mt-4 flex flex-wrap justify-center gap-2.5">
-                            <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
-                              💰 Finance:{" "}
-                              <span className="font-bold text-emerald-400">{clampForBar(stats.finances)}</span>
-                            </span>
-                            <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
-                              📣 Fans:{" "}
-                              <span className="font-bold text-emerald-400">{clampForBar(stats.fans)}</span>
-                            </span>
-                            <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
-                              🧠 Morale:{" "}
-                              <span className="font-bold text-emerald-400">{clampForBar(stats.morale)}</span>
-                            </span>
-                          </div>
-                        </div>
-
-                        <p className="mt-6 text-xs leading-relaxed tracking-wide text-zinc-300 md:text-sm">
-                          Your tactical DNA is calculated. The squad is waiting in the tunnel. Take control
-                          of a real club against live data and rule the game.
-                        </p>
-                        <a
-                          href="https://apps.apple.com/tr/app/efsane-ba%C5%9Fkan/id6743401408"
-                          target="_blank"
-                          data-testid="download-beta-btn"
-                          className="mt-4 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
-                        >
-                          TAKE CONTROL: DOWNLOAD NOW
-                        </a>
+                    <div className="rounded-xl border border-zinc-700 bg-black/90 p-5 shadow-[0_0_30px_rgba(0,0,0,0.75)]">
+                      <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider">
+                        <span className="text-emerald-400">Owner DNA</span>
+                        <span className="text-emerald-400 font-bold [text-shadow:0_0_8px_#10b981]">
+                          {animatedAttitudeScore}%
+                        </span>
+                      </div>
+                      <div className="h-3 overflow-hidden rounded-full bg-zinc-800 ring-1 ring-emerald-500/30">
+                        <div
+                          className="h-full rounded-full !bg-[#10b981] shadow-[0_0_18px_#10b981] transition-all duration-[2000ms] ease-out"
+                          style={{ width: `${barFillScore}%` }}
+                        />
+                      </div>
+                      <div className="mt-4 flex flex-wrap justify-center gap-2.5">
+                        <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                          💰 Finance:{" "}
+                          <span className="font-bold text-emerald-400">{clampForBar(stats.finances)}</span>
+                        </span>
+                        <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                          📣 Fans:{" "}
+                          <span className="font-bold text-emerald-400">{clampForBar(stats.fans)}</span>
+                        </span>
+                        <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                          🧠 Morale:{" "}
+                          <span className="font-bold text-emerald-400">{clampForBar(stats.morale)}</span>
+                        </span>
                       </div>
                     </div>
-                  </motion.div>
-                )}
-              </div>
+
+                    <p className="mt-6 text-xs leading-relaxed tracking-wide text-zinc-300 md:text-sm">
+                      Your tactical DNA is calculated. The squad is waiting in the tunnel. Take control
+                      of a real club against live data and rule the game.
+                    </p>
+                    <a
+                      href="https://apps.apple.com/tr/app/efsane-ba%C5%9Fkan/id6743401408"
+                      target="_blank"
+                      data-testid="download-beta-btn"
+                      className="mt-4 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
+                    >
+                      TAKE CONTROL: DOWNLOAD NOW
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
             )}
             </section>
           </div>
 
-          <div className="relative z-0 mt-6 flex w-full justify-center">
+          <div className="relative z-0 mt-6 flex w-full justify-center md:fixed md:bottom-4 md:right-4 md:mt-0 md:w-auto md:justify-end">
             <img
               src="/efsanebaskan.png"
               alt="Efsane Baskan Studio"
