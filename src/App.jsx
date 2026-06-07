@@ -233,7 +233,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black text-zinc-100">
+    <div className="relative min-h-screen overflow-x-hidden bg-black text-zinc-100">
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden overflow-visible md:absolute md:right-0 md:top-0 md:block md:h-full md:w-1/2">
         <img
           src="/case.png"
@@ -258,59 +258,54 @@ function App() {
       </div>
 
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(16,185,129,0.17),transparent_45%)]" />
-      <img
-        src="/efsanebaskan.png"
-        alt="Efsane Baskan Studio"
-        className="pointer-events-none absolute bottom-2 right-2 z-30 w-[120px] opacity-75 sm:bottom-3 sm:right-3 sm:w-[150px] md:bottom-5 md:right-5 md:w-[180px]"
-      />
+      <main className="relative z-10 flex w-full flex-col px-4 py-4 pb-20 md:w-1/2 md:px-12 md:py-6">
+        <div className="mx-auto flex w-full max-w-md flex-col gap-y-6 md:max-w-3xl">
+          <div className="relative z-10">
+            <h1>
+              <span className="block text-white font-black text-4xl md:text-5xl tracking-tight uppercase mb-1">
+                LEGENDARY CLUB OWNER (LCO)
+              </span>
+              <span className="block !text-[#10b981] font-black text-5xl md:text-7xl tracking-tighter uppercase drop-shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+                OWN THE CLUB. RULE THE GAME.
+              </span>
+            </h1>
 
-      <main className="relative z-10 h-full w-full px-4 py-4 pb-20 md:w-1/2 md:px-12 md:py-6">
-        <div className="mx-auto flex h-full w-full max-w-md flex-col md:max-w-3xl">
-          <h1>
-            <span className="block text-white font-black text-4xl md:text-5xl tracking-tight uppercase mb-1">
-              LEGENDARY CLUB OWNER (LCO)
-            </span>
-            <span className="block !text-[#10b981] font-black text-5xl md:text-7xl tracking-tighter uppercase drop-shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-              OWN THE CLUB. RULE THE GAME.
-            </span>
-          </h1>
+            <div className="mt-4 mb-8 grid w-full grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+                className="flex flex-col items-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-center backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/60 hover:shadow-[0_0_18px_rgba(16,185,129,0.35)]"
+              >
+                <BrainCircuit className="!text-[#10b981] w-8 h-8 drop-shadow-[0_0_8px_#10b981] animate-pulse" />
+                <p className="mt-2 text-sm font-black tracking-wider text-white md:text-base">SKILL-BASED</p>
+              </motion.div>
 
-          <div className="mt-4 mb-8 grid w-full grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="flex flex-col items-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-center backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/60 hover:shadow-[0_0_18px_rgba(16,185,129,0.35)]"
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-center backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/60 hover:shadow-[0_0_18px_rgba(16,185,129,0.35)]"
+              >
+                <Scale className="!text-[#10b981] w-8 h-8 drop-shadow-[0_0_8px_#10b981]" />
+                <p className="mt-2 text-sm font-black tracking-wider text-white md:text-base">NO PAY-TO-WIN</p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+                className="flex flex-col items-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-center backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/60 hover:shadow-[0_0_18px_rgba(16,185,129,0.35)]"
+              >
+                <Trophy className="!text-[#10b981] w-8 h-8 drop-shadow-[0_0_8px_#10b981]" />
+                <p className="mt-2 text-sm font-black tracking-wider text-white md:text-base">REAL REWARDS</p>
+              </motion.div>
+            </div>
+
+            <section
+              data-testid="quiz-container"
+              className="relative w-full h-auto overflow-hidden rounded-xl border border-emerald-500/30 bg-zinc-900/80 px-4 pt-4 pb-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] md:pb-8"
             >
-              <BrainCircuit className="!text-[#10b981] w-8 h-8 drop-shadow-[0_0_8px_#10b981] animate-pulse" />
-              <p className="mt-2 text-sm font-black tracking-wider text-white md:text-base">SKILL-BASED</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col items-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-center backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/60 hover:shadow-[0_0_18px_rgba(16,185,129,0.35)]"
-            >
-              <Scale className="!text-[#10b981] w-8 h-8 drop-shadow-[0_0_8px_#10b981]" />
-              <p className="mt-2 text-sm font-black tracking-wider text-white md:text-base">NO PAY-TO-WIN</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35 }}
-              className="flex flex-col items-center rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 text-center backdrop-blur-md transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/60 hover:shadow-[0_0_18px_rgba(16,185,129,0.35)]"
-            >
-              <Trophy className="!text-[#10b981] w-8 h-8 drop-shadow-[0_0_8px_#10b981]" />
-              <p className="mt-2 text-sm font-black tracking-wider text-white md:text-base">REAL REWARDS</p>
-            </motion.div>
-          </div>
-
-          <section
-            data-testid="quiz-container"
-            className="relative w-full h-auto overflow-hidden rounded-xl border border-emerald-500/30 bg-zinc-900/80 px-4 pt-4 pb-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] md:h-[500px] md:pb-8"
-          >
             <h2 className="text-2xl font-black uppercase tracking-tight text-white">
               WHAT KIND OF OWNER ARE YOU?
             </h2>
@@ -371,11 +366,11 @@ function App() {
 
             <p className="mt-2 text-center text-xl font-medium text-zinc-200">{phaseLabel}</p>
 
-            <div className="relative mt-2 min-h-[260px] flex-1 overflow-hidden">
+            <div className="mt-2">
               <AnimatePresence mode="wait">
               <motion.div
                 key={stepKey}
-                className="absolute inset-0 overflow-y-auto pr-1"
+                className="pr-1"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
@@ -528,7 +523,16 @@ function App() {
                 )}
               </div>
             )}
-          </section>
+            </section>
+          </div>
+
+          <div className="relative z-0 mt-6 flex w-full justify-center">
+            <img
+              src="/efsanebaskan.png"
+              alt="Efsane Baskan Studio"
+              className="pointer-events-none w-[120px] opacity-75 sm:w-[150px] md:w-[180px]"
+            />
+          </div>
         </div>
       </main>
     </div>
