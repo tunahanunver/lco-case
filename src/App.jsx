@@ -302,228 +302,233 @@ function App() {
               </motion.div>
             </div>
 
-            <section
-              data-testid="quiz-container"
-              className="relative w-full h-auto overflow-hidden rounded-xl border border-emerald-500/30 bg-zinc-900/80 px-4 pt-4 pb-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] md:pb-8"
-            >
-            <h2 className="text-2xl font-black uppercase tracking-tight text-white">
-              WHAT KIND OF OWNER ARE YOU?
-            </h2>
-
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {metricItems.map((metric) => {
-                const Icon = metric.icon;
-                return (
-                  <div key={metric.key}>
-                    <div className="mb-2 flex items-center justify-between text-sm text-zinc-200">
-                      <span className="inline-flex items-center gap-2 font-semibold">
-                        <Icon size={14} className="text-emerald-400" />
-                        {metric.label}
-                      </span>
-                      <span
-                        data-testid={
-                          metric.key === "finances"
-                            ? "finance-val"
-                            : metric.key === "fans"
-                              ? "fans-val"
-                              : "morale-val"
-                        }
-                        className="font-bold"
-                      >
-                        {metric.value}
-                      </span>
-                    </div>
-                    <div className="h-3 overflow-hidden rounded-full bg-zinc-800">
-                      <motion.div
-                        animate={{ width: `${clampForBar(metric.value)}%` }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="!bg-[#10b981] h-full rounded-full shadow-[0_0_15px_#10b981]"
-                        style={{ width: `${clampForBar(metric.value)}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-3 flex items-center justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
-                Step {currentStepNumber} of 3
-              </p>
-              <div className="flex items-center gap-1.5">
-                {[1, 2, 3].map((step) => (
-                  <span
-                    key={step}
-                    className={`h-1 w-8 rounded-full transition ${
-                      step <= currentStepNumber
-                        ? "bg-[#10b981] shadow-[0_0_10px_rgba(16,185,129,0.65)]"
-                        : "bg-zinc-700"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <p className="mt-2 text-center text-xl font-medium text-zinc-200">{phaseLabel}</p>
-
-            <div className="mt-2">
-              <AnimatePresence mode="wait">
-              <motion.div
-                key={stepKey}
-                className="pr-1"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25 }}
+            {!isFinalRevealed && (
+              <section
+                data-testid="quiz-container"
+                className="relative w-full h-auto overflow-hidden rounded-xl border border-emerald-500/30 bg-zinc-900/80 px-4 pt-4 pb-6 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] md:pb-8"
               >
-                <h3 className="mt-2 text-2xl font-black uppercase leading-tight text-white">{currentStep.title}</h3>
-                <p className="mt-2 text-base leading-relaxed text-zinc-200">{currentStep.context}</p>
+                <h2 className="text-2xl font-black uppercase tracking-tight text-white">
+                  WHAT KIND OF OWNER ARE YOU?
+                </h2>
 
-                {!isFinalRevealed ? (
-                  <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <motion.button
-                      type="button"
-                      data-testid="option-a"
-                      data-legacy-testid="quiz-option-a"
-                      onClick={() => handleSelectOption(currentStep.options[0], "a")}
-                      whileHover={{ scale: 1.02 }}
-                      className={`group w-full rounded-xl border bg-zinc-900/80 p-5 text-left cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-[#10b981] hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] ${
-                        selectedOption === "a"
-                          ? "border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.45)]"
-                          : "border-zinc-800"
-                      }`}
-                    >
-                      <span className="text-sm font-extrabold uppercase text-zinc-300 transition-colors group-hover:text-[#10b981]">
-                        OPTION A:
-                      </span>
-                        <p className="mt-1 text-base font-black uppercase text-zinc-100">
-                        {currentStep.options[0].label}
-                      </p>
-                    </motion.button>
+                <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  {metricItems.map((metric) => {
+                    const Icon = metric.icon;
+                    return (
+                      <div key={metric.key}>
+                        <div className="mb-2 flex items-center justify-between text-sm text-zinc-200">
+                          <span className="inline-flex items-center gap-2 font-semibold">
+                            <Icon size={14} className="text-emerald-400" />
+                            {metric.label}
+                          </span>
+                          <span
+                            data-testid={
+                              metric.key === "finances"
+                                ? "finance-val"
+                                : metric.key === "fans"
+                                  ? "fans-val"
+                                  : "morale-val"
+                            }
+                            className="font-bold"
+                          >
+                            {metric.value}
+                          </span>
+                        </div>
+                        <div className="h-3 overflow-hidden rounded-full bg-zinc-800">
+                          <motion.div
+                            animate={{ width: `${clampForBar(metric.value)}%` }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className="!bg-[#10b981] h-full rounded-full shadow-[0_0_15px_#10b981]"
+                            style={{ width: `${clampForBar(metric.value)}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
-                    <motion.button
-                      type="button"
-                      data-testid="option-b"
-                      data-legacy-testid="quiz-option-b"
-                      onClick={() => handleSelectOption(currentStep.options[1], "b")}
-                      whileHover={{ scale: 1.02 }}
-                      className={`group w-full rounded-xl border bg-zinc-900/80 p-5 text-left cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-[#10b981] hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] ${
-                        selectedOption === "b"
-                          ? "border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.45)]"
-                          : "border-zinc-800"
-                      }`}
-                    >
-                      <span className="text-sm font-extrabold uppercase text-zinc-300 transition-colors group-hover:text-[#10b981]">
-                        OPTION B:
-                      </span>
-                        <p className="mt-1 text-base font-black uppercase text-zinc-100">
-                        {currentStep.options[1].label}
-                      </p>
-                    </motion.button>
-                  </div>
-                ) : null}
-
-                {!isFinalRevealed && (
-                  <button
-                    type="button"
-                    data-testid="next-step-btn"
-                    onClick={handleNextStep}
-                    disabled={!pendingSelection || isCalculating}
-                    className="mt-4 w-full rounded-full !bg-[#10b981] !text-black py-3 text-sm font-black uppercase tracking-[0.14em] shadow-[0_0_20px_rgba(16,185,129,0.55)] transition disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    CONFIRM STRATEGY
-                  </button>
-                )}
-              </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {isCalculating && (
-              <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/75 p-4 backdrop-blur-xl md:p-6">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center"
-                >
-                  <p className="text-sm font-bold uppercase tracking-[0.18em] text-zinc-300">
-                    ANALYZING YOUR OWNER PROFILE...
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-400">
+                    Step {currentStepNumber} of 3
                   </p>
-                  <div className="mx-auto mt-4 h-10 w-10 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
-                </motion.div>
-              </div>
+                  <div className="flex items-center gap-1.5">
+                    {[1, 2, 3].map((step) => (
+                      <span
+                        key={step}
+                        className={`h-1 w-8 rounded-full transition ${
+                          step <= currentStepNumber
+                            ? "bg-[#10b981] shadow-[0_0_10px_rgba(16,185,129,0.65)]"
+                            : "bg-zinc-700"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <p className="mt-2 text-center text-xl font-medium text-zinc-200">{phaseLabel}</p>
+
+                <div className="mt-2">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={stepKey}
+                      className="pr-1"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <h3 className="mt-2 text-2xl font-black uppercase leading-tight text-white">{currentStep.title}</h3>
+                      <p className="mt-2 text-base leading-relaxed text-zinc-200">{currentStep.context}</p>
+
+                      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        <motion.button
+                          type="button"
+                          data-testid="option-a"
+                          data-legacy-testid="quiz-option-a"
+                          onClick={() => handleSelectOption(currentStep.options[0], "a")}
+                          whileHover={{ scale: 1.02 }}
+                          className={`group w-full rounded-xl border bg-zinc-900/80 p-5 text-left cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-[#10b981] hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] ${
+                            selectedOption === "a"
+                              ? "border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.45)]"
+                              : "border-zinc-800"
+                          }`}
+                        >
+                          <span className="text-sm font-extrabold uppercase text-zinc-300 transition-colors group-hover:text-[#10b981]">
+                            OPTION A:
+                          </span>
+                          <p className="mt-1 text-base font-black uppercase text-zinc-100">
+                            {currentStep.options[0].label}
+                          </p>
+                        </motion.button>
+
+                        <motion.button
+                          type="button"
+                          data-testid="option-b"
+                          data-legacy-testid="quiz-option-b"
+                          onClick={() => handleSelectOption(currentStep.options[1], "b")}
+                          whileHover={{ scale: 1.02 }}
+                          className={`group w-full rounded-xl border bg-zinc-900/80 p-5 text-left cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-[#10b981] hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] ${
+                            selectedOption === "b"
+                              ? "border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.45)]"
+                              : "border-zinc-800"
+                          }`}
+                        >
+                          <span className="text-sm font-extrabold uppercase text-zinc-300 transition-colors group-hover:text-[#10b981]">
+                            OPTION B:
+                          </span>
+                          <p className="mt-1 text-base font-black uppercase text-zinc-100">
+                            {currentStep.options[1].label}
+                          </p>
+                        </motion.button>
+                      </div>
+
+                      <button
+                        type="button"
+                        data-testid="next-step-btn"
+                        onClick={handleNextStep}
+                        disabled={!pendingSelection || isCalculating}
+                        className="mt-4 w-full rounded-full !bg-[#10b981] !text-black py-3 text-sm font-black uppercase tracking-[0.14em] shadow-[0_0_20px_rgba(16,185,129,0.55)] transition disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        CONFIRM STRATEGY
+                      </button>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {isCalculating && (
+                  <div className="absolute inset-0 z-50 flex items-center justify-center rounded-xl bg-black/75 p-4 backdrop-blur-xl md:p-6">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center"
+                    >
+                      <p className="text-sm font-bold uppercase tracking-[0.18em] text-zinc-300">
+                        ANALYZING YOUR OWNER PROFILE...
+                      </p>
+                      <div className="mx-auto mt-4 h-10 w-10 animate-spin rounded-full border-2 border-emerald-400 border-t-transparent" />
+                    </motion.div>
+                  </div>
+                )}
+              </section>
             )}
 
             {isFinalRevealed && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="relative mt-4 overflow-hidden rounded-xl opacity-0 animate-in fade-in duration-1000"
+              <section
+                data-testid="final-container"
+                className="relative w-full rounded-xl border border-emerald-500/30 bg-zinc-900/80 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
               >
-                <img
-                  src="/stadium-tunnel.png"
-                  alt="Matchday tunnel"
-                  className="absolute inset-0 h-full w-full object-cover object-center"
-                  style={{ filter: "brightness(1.45) contrast(1.1) saturate(1.2)" }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/20 to-transparent" />
-
-                <div className="relative z-10 flex min-h-screen h-auto flex-col items-center justify-start p-5 pb-10 md:p-6 md:pb-10">
-                  <div className="h-fit w-full max-w-md rounded-3xl border border-zinc-700 bg-black/60 p-4 text-center shadow-2xl backdrop-blur-sm">
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
-                      MATCHDAY: THE GRAND FINAL
-                    </h3>
-                    <p className="mt-3 text-lg font-extrabold uppercase tracking-wide text-[#10b981] md:text-xl">
-                      {finalProfileTitle}
-                    </p>
-
-                    <hr className="my-6 border-zinc-700" />
-
-                    <div className="rounded-xl border border-zinc-700 bg-black/90 p-5 shadow-[0_0_30px_rgba(0,0,0,0.75)]">
-                      <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider">
-                        <span className="text-emerald-400">Owner DNA</span>
-                        <span className="text-emerald-400 font-bold [text-shadow:0_0_8px_#10b981]">
-                          {animatedAttitudeScore}%
-                        </span>
-                      </div>
-                      <div className="h-3 overflow-hidden rounded-full bg-zinc-800 ring-1 ring-emerald-500/30">
-                        <div
-                          className="h-full rounded-full !bg-[#10b981] shadow-[0_0_18px_#10b981] transition-all duration-[2000ms] ease-out"
-                          style={{ width: `${barFillScore}%` }}
-                        />
-                      </div>
-                      <div className="mt-4 flex flex-wrap justify-center gap-2.5">
-                        <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
-                          💰 Finance:{" "}
-                          <span className="font-bold text-emerald-400">{clampForBar(stats.finances)}</span>
-                        </span>
-                        <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
-                          📣 Fans:{" "}
-                          <span className="font-bold text-emerald-400">{clampForBar(stats.fans)}</span>
-                        </span>
-                        <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
-                          🧠 Morale:{" "}
-                          <span className="font-bold text-emerald-400">{clampForBar(stats.morale)}</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="mt-6 text-xs leading-relaxed tracking-wide text-zinc-300 md:text-sm">
-                      Your tactical DNA is calculated. The squad is waiting in the tunnel. Take control
-                      of a real club against live data and rule the game.
-                    </p>
-                    <a
-                      href="https://apps.apple.com/tr/app/efsane-ba%C5%9Fkan/id6743401408"
-                      target="_blank"
-                      data-testid="download-beta-btn"
-                      className="mt-4 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
-                    >
-                      TAKE CONTROL: DOWNLOAD NOW
-                    </a>
-                  </div>
+                <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-xl">
+                  <img
+                    src="/stadium-tunnel.png"
+                    alt="Matchday tunnel"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    style={{ filter: "brightness(1.45) contrast(1.1) saturate(1.2)" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/20 to-transparent" />
                 </div>
-              </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="relative z-10 opacity-0 animate-in fade-in duration-1000"
+                >
+                  <div className="relative z-10 flex h-auto flex-col items-center justify-start p-6 pb-10">
+                    <div className="h-fit w-full max-w-md rounded-3xl border border-zinc-700 bg-black/60 p-4 text-center shadow-2xl backdrop-blur-sm">
+                      <h3 className="text-sm font-bold uppercase tracking-widest text-white md:text-base">
+                        MATCHDAY: THE GRAND FINAL
+                      </h3>
+                      <p className="mt-3 text-lg font-extrabold uppercase tracking-wide text-[#10b981] md:text-xl">
+                        {finalProfileTitle}
+                      </p>
+
+                      <hr className="my-6 border-zinc-700" />
+
+                      <div className="rounded-xl border border-zinc-700 bg-black/90 p-5 shadow-[0_0_30px_rgba(0,0,0,0.75)]">
+                        <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider">
+                          <span className="text-emerald-400">Owner DNA</span>
+                          <span className="text-emerald-400 font-bold [text-shadow:0_0_8px_#10b981]">
+                            {animatedAttitudeScore}%
+                          </span>
+                        </div>
+                        <div className="h-3 overflow-hidden rounded-full bg-zinc-800 ring-1 ring-emerald-500/30">
+                          <div
+                            className="h-full rounded-full !bg-[#10b981] shadow-[0_0_18px_#10b981] transition-all duration-[2000ms] ease-out"
+                            style={{ width: `${barFillScore}%` }}
+                          />
+                        </div>
+                        <div className="mt-4 flex flex-wrap justify-center gap-2.5">
+                          <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                            💰 Finance:{" "}
+                            <span className="font-bold text-emerald-400">{clampForBar(stats.finances)}</span>
+                          </span>
+                          <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                            📣 Fans:{" "}
+                            <span className="font-bold text-emerald-400">{clampForBar(stats.fans)}</span>
+                          </span>
+                          <span className="flex items-center gap-1 rounded-full border border-zinc-700 bg-zinc-900/80 px-3 py-1.5 text-xs text-zinc-300">
+                            🧠 Morale:{" "}
+                            <span className="font-bold text-emerald-400">{clampForBar(stats.morale)}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="mt-6 text-xs leading-relaxed tracking-wide text-zinc-300 md:text-sm">
+                        Your tactical DNA is calculated. The squad is waiting in the tunnel. Take control
+                        of a real club against live data and rule the game.
+                      </p>
+                      <a
+                        href="https://apps.apple.com/tr/app/efsane-ba%C5%9Fkan/id6743401408"
+                        target="_blank"
+                        data-testid="download-beta-btn"
+                        className="mt-4 w-full !bg-[#10b981] !text-black font-black py-4 px-6 rounded-full text-center block shadow-[0_0_35px_rgba(16,185,129,0.6)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
+                      >
+                        TAKE CONTROL: DOWNLOAD NOW
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              </section>
             )}
-            </section>
           </div>
 
           <div className="relative z-0 mt-6 flex w-full justify-center md:fixed md:bottom-4 md:right-4 md:mt-0 md:w-auto md:justify-end">
