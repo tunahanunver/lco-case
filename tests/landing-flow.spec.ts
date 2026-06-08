@@ -51,7 +51,9 @@ test.describe("Landing to Matchday dashboard flow", () => {
 
       await expect(page.getByText("MATCHDAY: THE GRAND FINAL")).toBeVisible();
       await expect(page.getByText("Owner DNA")).toBeVisible();
-      await expect(quiz.locator("div.h-3.overflow-hidden.rounded-full.bg-zinc-800").first()).toBeVisible();
+      const final = page.getByTestId("final-container");
+      await expect(final).toBeVisible();
+      await expect(final.locator("div.h-3.overflow-hidden.rounded-full.bg-zinc-800").first()).toBeVisible();
 
       const downloadButton = page.getByTestId("download-beta-btn");
       await expect(downloadButton).toBeVisible();
